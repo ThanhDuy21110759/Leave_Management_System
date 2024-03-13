@@ -15,6 +15,15 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 - DB: MySQL
 - Deployment: Render, Clever Cloud
 
+`Set up database`
+
+`Step 1:` create database employee_leave;
+
+`Step 2:` 
+
+- INSERT INTO roles(name) VALUES('ROLE_EMPLOYEE');
+- INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
 
 <strong>Details</strong>
 
