@@ -14,3 +14,18 @@ Technology:
 - BE: Java Spring Boot build REST API, Spring security, Spring data (JPA)
 - DB: MySQL
 - Deployment: Render, Clever Cloud
+
+Details:
+
+/api/auth/signin: login với token {ROLE_ADMIN, ROLE_EMPLOYEE}
+
+/api/auth/signup: Đăng ký user {ROLE_ADMIN, ROLE_EMPLOYEE}
+
+
+/api/admin/request: {POST} accept/ reject request
+
+/api/admin/requests: {GET} lấy ds các request của employee
+
+/api/employee/request: {POST, PUT, DELETE} thêm, sửa, xóa request
+
+/api/employee/requests: {GET} lấy ds request cá nhân
