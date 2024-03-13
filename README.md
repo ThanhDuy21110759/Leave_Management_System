@@ -15,7 +15,7 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 - DB: MySQL
 - Deployment: Render, Clever Cloud
 
-`Set up database`
+<strong>Set up database</strong>
 
 `Step 1:` create database employee_leave;
 
