@@ -29,7 +29,23 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 
 `/api/auth/signin`: login với token {ROLE_ADMIN, ROLE_EMPLOYEE}
 
+    {
+      "username": "chutich",
+    
+      "password": "12345678"
+    }
+
 `/api/auth/signup`: Đăng ký user {ROLE_ADMIN, ROLE_EMPLOYEE}
+
+    {
+      "username": "chutich",
+    
+      "password": "12345678",
+    
+      "email": "chutich.dev@gmail.com",
+    
+      "role": ["admin"] // với role Admin và Employee
+    }
 
 `/api/admin/request`: {POST} accept/ reject request
 
@@ -38,3 +54,11 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 `/api/employee/request`: {POST, PUT, DELETE} thêm, sửa, xóa request
 
 `/api/employee/requests`: {GET} lấy ds request cá nhân
+
+<strong>Note API</strong>
+
+1. `/api/admin/request`: thực hiện update remaining time sau khi accept
+
+2. `/api/employee/request`: thực hiện kiểm tra (ngày trùng với old request, remaing time >= diff)
+
+3. `/api/employee/request`: thực hiện kiểm tra request đang được xử lý
