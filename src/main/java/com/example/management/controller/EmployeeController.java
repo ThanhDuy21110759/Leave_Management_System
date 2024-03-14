@@ -1,16 +1,21 @@
 package com.example.management.controller;
 
+import com.example.management.entity.EStatus;
 import com.example.management.entity.LeaveRequest;
 import com.example.management.entity.User;
+import com.example.management.payload.response.MessageResponse;
 import com.example.management.repository.LeaveRequestRepository;
 import com.example.management.repository.UserRepository;
+import com.example.management.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -22,28 +27,39 @@ public class EmployeeController {
 
     @Autowired
     private LeaveRequestRepository leaveRequestRepository;
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    JwtUtils jwtUtils;
 
     @PostMapping("/request")
-    public ResponseEntity<?> addNewLeaveRequest(@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startDate,
-                                                @RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date endDate,
-                                                @RequestParam("reason") String reason){
+    public ResponseEntity<?> addNewLeaveRequest(@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+                                                @RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+                                                @RequestParam("reason") String reason,
+                                                @RequestHeader("Authorization") String authHeader){
+
+        String token = authHeader.replace("Bearer ", "").trim();
 
         // Get userId by Token (Header)
-        long userId = 1;
+        Optional<User> userOptional = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
+        if (userOptional.isPresent()){
+            User user = userOptional.get();
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Error: User is not found."));
+            //Check trường hợp trùng request
+            LeaveRequest newLeaveRequest = new LeaveRequest();
+            newLeaveRequest.setStartDate(startDate);
+            newLeaveRequest.setEndDate(endDate);
+            newLeaveRequest.setReason(reason);
+            newLeaveRequest.setStatus(EStatus.PROCESS);
+            newLeaveRequest.setUser(user);
+            leaveRequestRepository.save(newLeaveRequest);
 
-        LeaveRequest newLeaveRequest = new LeaveRequest();
-        newLeaveRequest.setStartDate(startDate);
-        newLeaveRequest.setEndDate(endDate);
-        newLeaveRequest.setReason(reason);
-        newLeaveRequest.setUser(user);
-        leaveRequestRepository.save(newLeaveRequest);
-        return ResponseEntity.ok("Leave request added successfully");
+            return ResponseEntity
+                    .ok()
+                    .body(new MessageResponse("Leave request added successfully"));
+        } else return ResponseEntity
+                .badRequest()
+                .body(new MessageResponse("Login to add new request"));
     }
 
     @PutMapping("/request")
@@ -60,7 +76,28 @@ public class EmployeeController {
         leaveRequest.setEndDate(endDate);
         leaveRequest.setReason(reason);
         leaveRequestRepository.save(leaveRequest);
-        return ResponseEntity.ok("Leave request updated successfully");
+        return ResponseEntity.ok().body(new MessageResponse("Leave request updated successfully"));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> removeLeaveRequest(@RequestParam("id") Long reqId){
+        Optional<LeaveRequest> leaveRequestOpt = leaveRequestRepository.findById(reqId);
+        if (!leaveRequestOpt.isPresent()){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Không tồn tại request."));
+        }
+
+        //check request trong qua trinh xu ly
+        LeaveRequest leaveRequest = leaveRequestOpt.get();
+        if (leaveRequest.getStatus() == EStatus.PROCESS){
+
+            leaveRequestRepository.delete(leaveRequest);
+        } else return ResponseEntity.badRequest().body(new MessageResponse("Request đã được xử lý"));
+
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(new MessageResponse("Xóa request thành công"));
     }
 
     @GetMapping("/requests")
@@ -69,7 +106,7 @@ public class EmployeeController {
         if (leaveRequests.isEmpty()){
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body("No requests found for this user");
+                    .body(new MessageResponse("No requests found for this user"));
         }
         return ResponseEntity.ok(leaveRequests);
     }
