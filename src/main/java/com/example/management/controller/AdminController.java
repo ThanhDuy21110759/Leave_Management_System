@@ -51,7 +51,6 @@ public class AdminController {
 
         LeaveRequest leaveRequest = leaveRequestOptional.get();
         if (status){
-            leaveRequest.setStatus(EStatus.ACCEPT);
             User user = leaveRequest.getUser();
 
             //Lấy user và thực hiện update remaning time
@@ -63,6 +62,7 @@ public class AdminController {
             //Khoảng tgian nghỉ người dùng cho phép
             if (user.getRemainingLeaveDays() >= diff){
 
+                leaveRequest.setStatus(EStatus.ACCEPT);
                 user.setRemainingLeaveDays(user.getRemainingLeaveDays() - diff);
                 userRepository.save(user);
             } else return ResponseEntity

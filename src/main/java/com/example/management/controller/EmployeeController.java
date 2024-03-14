@@ -101,13 +101,25 @@ public class EmployeeController {
     }
 
     @GetMapping("/requests")
-    public ResponseEntity<?> getLeaveRequest(@RequestParam("id") Long id){
-        List<LeaveRequest> leaveRequests = leaveRequestRepository.getLeaveRequestsByUser_Id(id);
-        if (leaveRequests.isEmpty()){
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(new MessageResponse("No requests found for this user"));
+    public ResponseEntity<?> getLeaveRequest(@RequestHeader("Authorization") String authHeader){
+
+        // Get userId by Token (Header)
+        String token = authHeader.replace("Bearer ", "").trim();
+
+        Optional<User> userOptional = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
+        if (userOptional.isPresent()){
+            Long userId = userOptional.get().getId();
+
+            List<LeaveRequest> leaveRequests = leaveRequestRepository.getLeaveRequestsByUser_Id(userId);
+            if (leaveRequests.isEmpty()){
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(new MessageResponse("No requests found for this user"));
+            }
+
+            return ResponseEntity.ok(leaveRequests);
         }
-        return ResponseEntity.ok(leaveRequests);
+
+        return ResponseEntity.badRequest().body(new MessageResponse(""));
     }
 }
