@@ -48,8 +48,8 @@ public class EmployeeController {
 
     @PutMapping("/request")
     public ResponseEntity<?> updateLeaveRequest(@RequestParam("id") Long reqId,
-                                                @RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startDate,
-                                                @RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date endDate,
+                                                @RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+                                                @RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
                                                 @RequestParam("reason") String reason){
         Optional<LeaveRequest> leaveRequestOptional = leaveRequestRepository.findById(reqId);
         if (!leaveRequestOptional.isPresent()){
