@@ -29,7 +29,19 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 
 `/api/auth/signin`: login với token {ROLE_ADMIN, ROLE_EMPLOYEE}
 
+{
+    "username": "chutich",
+    "password": "12345678"
+}
+
 `/api/auth/signup`: Đăng ký user {ROLE_ADMIN, ROLE_EMPLOYEE}
+
+{
+    "username": "chutich",
+    "password": "12345678",
+    "email": "chutich.dev@gmail.com",
+    "role": ["admin"]
+}
 
 `/api/admin/request`: {POST} accept/ reject request
 
