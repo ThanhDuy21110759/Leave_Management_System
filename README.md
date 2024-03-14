@@ -53,6 +53,6 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 
 <strong>Note API</strong>
 
-1. /api/admin/request: thực hiện update remaining time sau khi accept
+1. `/api/admin/request`: thực hiện update remaining time sau khi accept
 
-2. /api/employee/request: thực hiện kiểm tra (ngày trùng với old request, remaing time >= diff)
+2. `/api/employee/request`: thực hiện kiểm tra (ngày trùng với old request, remaing time >= diff)
