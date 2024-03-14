@@ -56,3 +56,5 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 1. `/api/admin/request`: thực hiện update remaining time sau khi accept
 
 2. `/api/employee/request`: thực hiện kiểm tra (ngày trùng với old request, remaing time >= diff)
+
+3. `/api/employee/request`: thực hiện kiểm tra request đang được xử lý
