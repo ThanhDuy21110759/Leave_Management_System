@@ -44,7 +44,7 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
     
       "email": "chutich.dev@gmail.com",
     
-      "role": ["admin"]
+      "role": ["admin"] // với role Admin và Employee
     }
 
 `/api/admin/request`: {POST} accept/ reject request
