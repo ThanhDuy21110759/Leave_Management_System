@@ -7,8 +7,6 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 - Login/logout (employee, admin)
 - Accept/reject request (admin)
 
-<strong>Schedule</strong>
-
 <strong>Technology</strong>
 - FE: ReactJs
 - BE: Java Spring Boot build REST API, Spring security, Spring data (JPA)
