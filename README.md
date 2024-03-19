@@ -51,7 +51,7 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 
 `/api/admin/requests`: {GET} lấy ds các request của employee
 
-`/api/admin/requests/process`: {GET} lấy ds request cá nhân đang trong quá trình xử lý
+`/api/admin/requests/process`: {GET} lấy ds request request đang trong quá trình xử lý
 
 `/api/employee/request`: {POST, PUT, DELETE} thêm, sửa, xóa request
 
