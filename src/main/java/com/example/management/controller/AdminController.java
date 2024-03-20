@@ -5,8 +5,10 @@ import com.example.management.entity.LeaveRequest;
 import com.example.management.entity.User;
 import com.example.management.payload.response.LeaveResponse;
 import com.example.management.payload.response.MessageResponse;
+import com.example.management.payload.response.UserResponse;
 import com.example.management.repository.LeaveRequestRepository;
 import com.example.management.repository.UserRepository;
+import com.example.management.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,33 @@ public class AdminController {
 
     @Autowired
     private LeaveRequestRepository leaveRequestRepository;
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @GetMapping
+    public ResponseEntity<?> getInfoAdmin(@RequestHeader("Authorization") String authHeader){
 
+        // Get userId by Token (Header)
+        String token = authHeader.replace("Bearer ", "").trim();
+
+        Optional<User> userOptional = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
+        if (userOptional.isPresent()) {
+
+            //get data
+            UserResponse user = new UserResponse();
+            user.setId(userOptional.get().getId());
+            user.setUsername(userOptional.get().getUsername());
+            user.setEmail(userOptional.get().getEmail());
+            user.setRemainingLeaveDays(userOptional.get().getRemainingLeaveDays());
+            user.setRoles(userOptional.get().getRoles());
+
+            return  ResponseEntity.ok()
+                    .body(user);
+        }
+        return ResponseEntity.badRequest()
+                .body(new MessageResponse("Không tìm thấy thông tin"));
+    }
     @GetMapping("/requests")
     public ResponseEntity<?> getLeaveRequests(){
         List<LeaveRequest> leaveRequests = leaveRequestRepository.findAll();
@@ -78,6 +103,7 @@ public class AdminController {
                 LeaveResponse resp = new LeaveResponse();
                 resp.setRequestId(leaveRequest.getId());
                 resp.setUsername(leaveRequest.getUser().getUsername());
+                resp.setRemainingLeaveDays(leaveRequest.getUser().getRemainingLeaveDays());
                 resp.setStartDate(leaveRequest.getStartDate());
                 resp.setEndDate(leaveRequest.getEndDate());
                 resp.setReason(leaveRequest.getReason());

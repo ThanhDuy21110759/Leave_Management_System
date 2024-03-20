@@ -5,6 +5,7 @@ import com.example.management.entity.LeaveRequest;
 import com.example.management.entity.User;
 import com.example.management.payload.response.LeaveResponse;
 import com.example.management.payload.response.MessageResponse;
+import com.example.management.payload.response.UserResponse;
 import com.example.management.repository.LeaveRequestRepository;
 import com.example.management.repository.UserRepository;
 import com.example.management.security.jwt.JwtUtils;
@@ -34,6 +35,28 @@ public class EmployeeController {
     JwtUtils jwtUtils;
     @Autowired
     private LeaveRequestService leaveRequestService;
+    @GetMapping
+    public ResponseEntity<?> getInfoEmployee(@RequestHeader("Authorization") String authHeader){
+
+        // Get userId by Token (Header)
+        String token = authHeader.replace("Bearer ", "").trim();
+
+        Optional<User> userOptional = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
+        if (userOptional.isPresent()) {
+            //get data
+            UserResponse user = new UserResponse();
+            user.setId(userOptional.get().getId());
+            user.setUsername(userOptional.get().getUsername());
+            user.setEmail(userOptional.get().getEmail());
+            user.setRemainingLeaveDays(userOptional.get().getRemainingLeaveDays());
+            user.setRoles(userOptional.get().getRoles());
+
+            return  ResponseEntity.ok()
+                    .body(user);
+        }
+        return ResponseEntity.badRequest()
+                .body(new MessageResponse("Không tìm thấy thông tin"));
+    }
 
     @PostMapping("/request")
     public ResponseEntity<?> addNewLeaveRequest(@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date start,
