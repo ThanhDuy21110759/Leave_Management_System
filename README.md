@@ -28,7 +28,7 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 `/api/auth/signin`: login với token {ROLE_ADMIN, ROLE_EMPLOYEE}
 
     {
-      "username": "chutich",
+      "username": "admin",
     
       "password": "12345678"
     }
@@ -36,7 +36,7 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 `/api/auth/signup`: Đăng ký user {ROLE_ADMIN, ROLE_EMPLOYEE}
 
     {
-      "username": "chutich",
+      "username": "admin",
     
       "password": "12345678",
     
