@@ -7,8 +7,6 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 - Login/logout (employee, admin)
 - Accept/reject request (admin)
 
-<strong>Schedule</strong>
-
 <strong>Technology</strong>
 - FE: ReactJs
 - BE: Java Spring Boot build REST API, Spring security, Spring data (JPA)
@@ -44,16 +42,19 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
     
       "email": "chutich.dev@gmail.com",
     
-      "role": ["admin"] // với role Admin và Employee
+      "role": ["admin"]
     }
 
 `/api/admin/request`: {POST} accept/ reject request
 
 `/api/admin/requests`: {GET} lấy ds các request của employee
 
+`/api/admin/requests/process`: {GET} lấy ds request request đang trong quá trình xử lý
+
 `/api/employee/request`: {POST, PUT, DELETE} thêm, sửa, xóa request
 
 `/api/employee/requests`: {GET} lấy ds request cá nhân
+
 
 <strong>Note API</strong>
 
