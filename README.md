@@ -53,6 +53,8 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 
 `/api/employee/request`: {POST, PUT, DELETE} thêm, sửa, xóa request
 
+    `/api/employee/request?id={value}`: format xóa request (trạng thái Process)
+
 `/api/employee/requests`: {GET} lấy ds request cá nhân
 
 
