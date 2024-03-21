@@ -121,6 +121,75 @@ public class AdminController {
         return ResponseEntity.ok(leaveRequestList);
     }
 
+    @GetMapping("/requests/accept")
+    public ResponseEntity<?> getLeaveRequestsAccept(){
+        List<LeaveRequest> leaveRequests = leaveRequestRepository.findAll();
+        if (leaveRequests.isEmpty()){
+            return ResponseEntity.badRequest()
+                    .body(new MessageResponse("Danh sách request rỗng."));
+        }
+
+        //Get data
+        List<LeaveResponse> leaveRequestList = new ArrayList<>();
+        for (LeaveRequest leaveRequest: leaveRequests){
+            if (leaveRequest.getStatus() == EStatus.ACCEPT){
+
+                //init items
+                LeaveResponse resp = new LeaveResponse();
+                resp.setRequestId(leaveRequest.getId());
+                resp.setUsername(leaveRequest.getUser().getUsername());
+                resp.setRemainingLeaveDays(leaveRequest.getUser().getRemainingLeaveDays());
+                resp.setStartDate(leaveRequest.getStartDate());
+                resp.setEndDate(leaveRequest.getEndDate());
+                resp.setReason(leaveRequest.getReason());
+                resp.setStatus(leaveRequest.getStatus());
+
+                leaveRequestList.add(resp);
+            }
+        }
+
+        if (leaveRequestList.isEmpty()){
+            return ResponseEntity.badRequest()
+                    .body(new MessageResponse("Danh sách request rỗng"));
+        }
+
+        return ResponseEntity.ok(leaveRequestList);
+    }
+
+    @GetMapping("/requests/reject")
+    public ResponseEntity<?> getLeaveRequestsReject(){
+        List<LeaveRequest> leaveRequests = leaveRequestRepository.findAll();
+        if (leaveRequests.isEmpty()){
+            return ResponseEntity.badRequest()
+                    .body(new MessageResponse("Danh sách request rỗng."));
+        }
+
+        //Get data
+        List<LeaveResponse> leaveRequestList = new ArrayList<>();
+        for (LeaveRequest leaveRequest: leaveRequests){
+            if (leaveRequest.getStatus() == EStatus.REJECT){
+
+                //init items
+                LeaveResponse resp = new LeaveResponse();
+                resp.setRequestId(leaveRequest.getId());
+                resp.setUsername(leaveRequest.getUser().getUsername());
+                resp.setRemainingLeaveDays(leaveRequest.getUser().getRemainingLeaveDays());
+                resp.setStartDate(leaveRequest.getStartDate());
+                resp.setEndDate(leaveRequest.getEndDate());
+                resp.setReason(leaveRequest.getReason());
+                resp.setStatus(leaveRequest.getStatus());
+
+                leaveRequestList.add(resp);
+            }
+        }
+
+        if (leaveRequestList.isEmpty()){
+            return ResponseEntity.badRequest()
+                    .body(new MessageResponse("Danh sách request rỗng"));
+        }
+
+        return ResponseEntity.ok(leaveRequestList);
+    }
     @PostMapping("/request")
     public ResponseEntity<?> setRequestStatus(@RequestParam("id") Long reqId,
                                               @RequestParam("status") Boolean status){
