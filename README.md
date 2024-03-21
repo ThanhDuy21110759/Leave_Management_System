@@ -51,9 +51,9 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 
 `/api/admin/requests/process`: {GET} lấy ds request request đang trong quá trình xử lý
 
-`/api/admin/requests/access`: {GET} lấy ds request request đã được xử lý
+`/api/admin/requests/accept`: {GET} lấy ds request request đã được xử lý
 
-`/api/admin/requests/reject`: {GET} lấy ds request request đã được tữ chối
+`/api/admin/requests/reject`: {GET} lấy ds request request đã bị tữ chối
 
 `/api/employee/request`: {POST, PUT, DELETE} thêm, sửa, xóa request
 
