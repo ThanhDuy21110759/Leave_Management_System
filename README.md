@@ -11,7 +11,6 @@ Chúng tôi mong muốn có một công cụ giúp nhân viên quản lý ngày 
 - FE: ReactJs
 - BE: Java Spring Boot build REST API, Spring security, Spring data (JPA)
 - DB: MySQL
-- Deployment: Render, Clever Cloud
 
 <strong>Set up database</strong>
 
