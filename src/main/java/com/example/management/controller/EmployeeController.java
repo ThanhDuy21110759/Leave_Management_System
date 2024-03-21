@@ -156,6 +156,7 @@ public class EmployeeController {
                 resp.setUsername(leaveRequest.getUser().getUsername());
                 resp.setRemainingLeaveDays(leaveRequest.getUser().getRemainingLeaveDays());
                 resp.setStartDate(leaveRequest.getStartDate());
+                resp.setEmail(leaveRequest.getUser().getEmail());
                 resp.setEndDate(leaveRequest.getEndDate());
                 resp.setReason(leaveRequest.getReason());
                 resp.setStatus(leaveRequest.getStatus());

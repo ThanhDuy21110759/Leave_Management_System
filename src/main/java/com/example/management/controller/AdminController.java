@@ -73,6 +73,7 @@ public class AdminController {
             resp.setRemainingLeaveDays(leaveRequest.getUser().getRemainingLeaveDays());
             resp.setStartDate(leaveRequest.getStartDate());
             resp.setEndDate(leaveRequest.getEndDate());
+            resp.setEmail(leaveRequest.getUser().getEmail());
             resp.setReason(leaveRequest.getReason());
             resp.setStatus(leaveRequest.getStatus());
 

@@ -11,19 +11,21 @@ public class LeaveResponse {
     private Long requestId;
     private Date endDate;
     private String reason;
+    private String email;
     private EStatus status;
 
     public LeaveResponse() {
 
     }
 
-    public LeaveResponse(String username, Long remainingLeaveDays, Date startDate, Long reqId, Date endDate, String reason, EStatus status) {
-        this.requestId = reqId;
+    public LeaveResponse(String username, Long remainingLeaveDays, Date startDate, Long requestId, Date endDate, String reason, String email, EStatus status) {
         this.username = username;
         this.remainingLeaveDays = remainingLeaveDays;
         this.startDate = startDate;
+        this.requestId = requestId;
         this.endDate = endDate;
         this.reason = reason;
+        this.email = email;
         this.status = status;
     }
 
@@ -80,5 +82,13 @@ public class LeaveResponse {
 
     public void setStatus(EStatus status) {
         this.status = status;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
